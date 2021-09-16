@@ -16,7 +16,6 @@ import (
 const alphaPattern = "^[a-zA-Z]+$"
 const defaultPattern = "^[a-zA-Z0-9]+$"
 
-
 type plugin struct {
 	*generator.Generator
 	generator.PluginImports
@@ -39,7 +38,6 @@ func (p *plugin) Init(g *generator.Generator) {
 }
 
 func (p *plugin) Generate(file *generator.FileDescriptor) {
-	fmt.Fprintf(os.Stderr, "---------------->")
 	/*if !p.useGogoImport {
 		vanity.TurnOffGogoImport(file.FileDescriptorProto)
 	}*/
@@ -71,7 +69,6 @@ func getFieldValidatorIfAny(field *descriptor.FieldDescriptorProto) *validator.F
 	return nil
 }
 
-
 func (p *plugin) generateRegexVars(file *generator.FileDescriptor, message *generator.Descriptor) {
 	ccTypeName := generator.CamelCaseSlice(message.TypeName())
 	for _, field := range message.Field {
@@ -82,7 +79,7 @@ func (p *plugin) generateRegexVars(file *generator.FileDescriptor, message *gene
 				fmt.Fprintf(os.Stderr, "WARNING: regex and uuid validator is set for field %v.%v, is null.", ccTypeName, fieldName)
 			} else if validator.Alpha != nil && *validator.Alpha {
 				p.P(`var `, p.regexName(ccTypeName, fieldName), ` = `, p.regexPkg.Use(), `.MustCompile(`, "`", alphaPattern, "`", `)`)
-			}else{
+			} else {
 				p.P(`var `, p.regexName(ccTypeName, fieldName), ` = `, p.regexPkg.Use(), `.MustCompile(`, "`", defaultPattern, "`", `)`)
 			}
 		}
@@ -105,8 +102,8 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 	p.P(`func (this *`, ccTypeName, `) Validate() error {`)
 	p.In()
 
-	fmt.Fprintf(os.Stderr, "field ", message.Field)
 	for _, field := range message.Field {
+		fmt.Fprintf(os.Stderr, field, "\n")
 		fieldValidator := getFieldValidatorIfAny(field)
 		if fieldValidator == nil && !field.IsMessage() {
 			fmt.Fprintf(os.Stderr, "fieldValidator nil ")
@@ -146,10 +143,9 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 	p.P(`}`)
 }
 
-
 func (p *plugin) generateAlphaValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
 	fmt.Fprintf(os.Stderr, "  inside generateAlphaValidator")
-	if fv.Alpha != nil  {
+	if fv.Alpha != nil {
 		p.P(`if !`, p.regexName(ccTypeName, fieldName), `.MatchString(`, variableName, `) {`)
 		p.In()
 		errorStr := "be a string conforming to default regex " + strconv.Quote(defaultPattern)
@@ -161,7 +157,6 @@ func (p *plugin) generateAlphaValidator(variableName string, ccTypeName string, 
 		p.P(`}`)
 	}
 }
-
 
 func (p *plugin) fieldIsProto3Map(file *generator.FileDescriptor, message *generator.Descriptor, field *descriptor.FieldDescriptorProto) bool {
 	if field.GetType() != descriptor.FieldDescriptorProto_TYPE_MESSAGE || !field.IsRepeated() {
