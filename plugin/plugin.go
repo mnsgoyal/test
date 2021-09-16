@@ -39,6 +39,7 @@ func (p *plugin) Init(g *generator.Generator) {
 }
 
 func (p *plugin) Generate(file *generator.FileDescriptor) {
+	fmt.Fprintf(os.Stderr, "---------------->")
 	/*if !p.useGogoImport {
 		vanity.TurnOffGogoImport(file.FileDescriptorProto)
 	}*/
