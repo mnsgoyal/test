@@ -64,6 +64,8 @@ import (
 	validator "github.com/mwitkow/go-proto-validators"
 )
 
+const alphaPattern = "^[a-zA-Z]+$"
+const defaultPattern = "^[a-zA-Z0-9]+$"
 const uuidPattern = "^([a-fA-F0-9]{8}-" +
 	"[a-fA-F0-9]{4}-" +
 	"[%s][a-fA-F0-9]{3}-" +
@@ -107,9 +109,9 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 		p.generateRegexVars(file, msg)
 		if gogoproto.IsProto3(file.FileDescriptorProto) {
 			p.generateProto3Message(file, msg)
-		} else {
+		} /*else {
 			p.generateProto2Message(file, msg)
-		}
+		}*/
 	}
 }
 
@@ -582,7 +584,26 @@ func (p *plugin) generateStringValidator(variableName string, ccTypeName string,
 		p.Out()
 		p.P(`}`)
 	}
+	if fv.Alpha != nil {
+		fmt.Fprintf(os.Stderr, " going inside stringval 1")
+		p.generateAlphaValidator(variableName, ccTypeName, fieldName, fv)
+	}
 	p.generateLengthValidator(variableName, ccTypeName, fieldName, fv)
+}
+
+func (p *plugin) generateAlphaValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
+	fmt.Fprintf(os.Stderr, "  inside generateAlphaValidator")
+	if fv.Alpha != nil {
+		p.P(`if !`, p.regexName(ccTypeName, fieldName), `.MatchString(`, variableName, `) {`)
+		p.In()
+		errorStr := "be a string conforming to default regex " + strconv.Quote(defaultPattern)
+		if *fv.Alpha {
+			errorStr = "be a string conforming to alpha regex " + strconv.Quote(alphaPattern)
+		}
+		p.P(`return `, p.validatorPkg.Use(), `.FieldError("`, fieldName, `",`, p.fmtPkg.Use(), ".Errorf(`", errorStr, "`))")
+		p.Out()
+		p.P(`}`)
+	}
 }
 
 func (p *plugin) generateRepeatedCountValidator(variableName string, ccTypeName string, fieldName string, fv *validator.FieldValidator) {
