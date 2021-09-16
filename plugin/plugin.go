@@ -103,7 +103,7 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 	p.In()
 
 	for _, field := range message.Field {
-		fmt.Fprintf(os.Stderr, field, "\n")
+		fmt.Fprintln(os.Stderr, field)
 		fieldValidator := getFieldValidatorIfAny(field)
 		if fieldValidator == nil && !field.IsMessage() {
 			fmt.Fprintf(os.Stderr, "fieldValidator nil ")
