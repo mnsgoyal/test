@@ -1,4 +1,4 @@
-module github.com/maanasasubrahmanyam-sd/test
+module github.com/mnsgoyal/test
 
 go 1.16
 

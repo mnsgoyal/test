@@ -9,7 +9,7 @@ import (
 
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	validator_plugin "github.com/maanasasubrahmanyam-sd/test/plugin"
+	validator_plugin "github.com/mnsgoyal/test/plugin"
 )
 
 func main() {
