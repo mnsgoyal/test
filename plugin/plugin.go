@@ -61,7 +61,7 @@ import (
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 	"github.com/gogo/protobuf/vanity"
 
-	validator "github.com/mnsgoyal/go-proto-validators"
+	validator "github.com/mnsgoyal/test"
 )
 
 const uuidPattern = "^([a-fA-F0-9]{8}-" +
