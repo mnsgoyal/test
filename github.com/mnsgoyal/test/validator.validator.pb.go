@@ -7,7 +7,7 @@ import (
 	fmt "fmt"
 	math "math"
 	proto "github.com/golang/protobuf/proto"
-	_ "google/protobuf"
+	_ "google.golang.org/protobuf/types/descriptorpb"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
