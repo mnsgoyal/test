@@ -71,7 +71,7 @@ message FieldValidator {
   // Ensures that a string value is in UUID format.
   // uuid_ver specifies the valid UUID versions. Valid values are: 0-5.
   // If uuid_ver is 0 all UUID versions are accepted.
-  optional string uuid_ver = 18;
+  optional int32 uuid_ver = 18;
   
   optional bool alpha = 19;
 }
