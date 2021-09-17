@@ -126,7 +126,7 @@ Or with gogo protobufs:
 ```sh
 protoc  \
   --proto_path=${GOPATH}/src \
-  --proto_path=${GOPATH}/src/github.com/gogo/protobuf/protobuf \
+  --proto_path=${GOPATH}/src/github.com/gogo/protobuf@v1.3.2/protobuf \
   --proto_path=. \
   --gogo_out=. \
   --govalidators_out=gogoimport=true:. \
@@ -139,3 +139,11 @@ Basically the magical incantation (apart from includes) is the `--govalidators_o
 ## License
 
 `go-proto-validators` is released under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+
+
+protoc \
+	--proto_path=src \
+	--proto_path=${GOPATH}/pkg/mod/github.com/gogo/protobuf@v1.3.2/protobuf \
+	--proto_path=. \
+	--gogo_out=Mgoogle/protobuf/descriptor.proto=github.com/gogo/protobuf@v1.3.2/protoc-gen-gogo/descriptor:. \
+	validator.proto
