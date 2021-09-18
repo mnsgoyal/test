@@ -139,3 +139,12 @@ Basically the magical incantation (apart from includes) is the `--govalidators_o
 ## License
 
 `test` is released under the Apache 2.0 license. See the [LICENSE](LICENSE) file for details.
+
+
+protoc \
+	--proto_path=. \
+	--proto_path=${GOPATH}/pkg/mod \
+	--proto_path=${GOPATH}/pkg/mod/github.com/gogo/protobuf@v1.3.2/protobuf \
+	--gogo_out=. \
+	--gogo_opt=Mgoogle/protobuf/descriptor.proto=github.com/gogo/protobuf/protoc-gen-gogo/descriptor \
+	validator.proto
