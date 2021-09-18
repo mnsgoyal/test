@@ -6,7 +6,7 @@ package validator
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	descriptor "github.com/gogo/protobuf@v1.3.2/protoc-gen-gogo/descriptor"
+	descriptor "github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	math "math"
 )
 
