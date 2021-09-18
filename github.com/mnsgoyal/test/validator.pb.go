@@ -6,7 +6,7 @@ package validator
 import (
 	fmt "fmt"
 	proto "github.com/gogo/protobuf/proto"
-	descriptor "github.com/golang/protobuf/protoc-gen-go/descriptor"
+	descriptorpb "google.golang.org/protobuf/types/descriptorpb"
 	math "math"
 )
 
@@ -273,7 +273,7 @@ func (m *OneofValidator) GetRequired() bool {
 }
 
 var E_Field = &proto.ExtensionDesc{
-	ExtendedType:  (*descriptor.FieldOptions)(nil),
+	ExtendedType:  (*descriptorpb.FieldOptions)(nil),
 	ExtensionType: (*FieldValidator)(nil),
 	Field:         65020,
 	Name:          "validator.field",
@@ -282,7 +282,7 @@ var E_Field = &proto.ExtensionDesc{
 }
 
 var E_Oneof = &proto.ExtensionDesc{
-	ExtendedType:  (*descriptor.OneofOptions)(nil),
+	ExtendedType:  (*descriptorpb.OneofOptions)(nil),
 	ExtensionType: (*OneofValidator)(nil),
 	Field:         65021,
 	Name:          "validator.oneof",
