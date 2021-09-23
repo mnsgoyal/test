@@ -94,7 +94,7 @@ func (p *plugin) generateProto3Message(file *generator.FileDescriptor, message *
 	ccTypeName := generator.CamelCaseSlice(message.TypeName())
 	p.P(`func (this *`, ccTypeName, `) Validator() []error {`)
 	p.In()
-	p.P(`errorsList := []error`)
+	p.P(`errorsList := []error{}`)
 	for _, field := range message.Field {
 		fieldValidator := getFieldValidatorIfAny(field)
 		if fieldValidator == nil && !field.IsMessage() {
