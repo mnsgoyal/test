@@ -43,7 +43,7 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 	p.regexPkg = p.NewImport("regexp")
 	p.fmtPkg = p.NewImport("fmt")
 	fmt.Fprintln(os.Stderr, "Running...")
-	p.validatorPkg = p.NewImport("github.com/mnsgoyal/test")
+	p.validatorPkg = p.NewImport("github.com/mnsgoyal/test/validator")
 	for _, msg := range file.Messages() {
 		if msg.DescriptorProto.GetOptions().GetMapEntry() {
 			continue
