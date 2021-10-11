@@ -1,6 +1,8 @@
 package plugin
 
 import (
+	"fmt"
+	"os"
 	"strconv"
 	"strings"
 
@@ -8,7 +10,7 @@ import (
 	"github.com/gogo/protobuf/proto"
 	"github.com/gogo/protobuf/protoc-gen-gogo/descriptor"
 	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
-	validator "github.com/mnsgoyal/test"
+	validator "github.com/mnsgoyal/test/validator"
 )
 
 const alphaPattern = "^[a-zA-Z]+$"
@@ -40,6 +42,7 @@ func (p *plugin) Generate(file *generator.FileDescriptor) {
 	p.PluginImports = generator.NewPluginImports(p.Generator)
 	p.regexPkg = p.NewImport("regexp")
 	p.fmtPkg = p.NewImport("fmt")
+	fmt.Fprintln(os.Stderr, "Running...")
 	p.validatorPkg = p.NewImport("github.com/mnsgoyal/test")
 	for _, msg := range file.Messages() {
 		if msg.DescriptorProto.GetOptions().GetMapEntry() {
